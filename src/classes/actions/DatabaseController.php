@@ -14,7 +14,7 @@ class DatabaseController extends Controller
         echo "Setting up database for MiniOrange SAML SP for Laravel...<br>";
         try {
             Artisan::call('migrate:refresh', array(
-                '--path' => 'vendor/devasyadave/newdb/src/classes/actions/2014_10_12_100000_create_miniorange_tables.php',
+                '--path' => 'vendor/devasyadave/samlbeta/src/classes/actions/2014_10_12_100000_create_miniorange_tables.php',
                 '--force' => TRUE
             ));
         } catch (\PDOException $e) {
