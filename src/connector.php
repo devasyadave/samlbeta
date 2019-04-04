@@ -14,16 +14,6 @@ if (! defined('MSSP_DIR'))
 if (! defined('MSSP_TEST_MODE'))
     define('MSSP_TEST_MODE', FALSE);
 
-//Check if Database Tables have been installed after package install
-    /*try {
-        DB::get_option('id');
-    } catch (\PDOException $e) {
-        DBinstaller::installTables();
-        echo "Setting up database for MiniOrange SAML SP for Laravel...You will be redirected to homepage in 5 seconds";
-        header('refresh:6;url=');
-        exit;
-    }*/
-
 // check if the directory containing CSS,JS,Resources exists in the root folder of the site
 if (! is_dir($_SERVER['DOCUMENT_ROOT'] . '/miniorange/sso')) {
     // copy miniorange css,js,images,etc assets to root folder of laravel app
@@ -59,7 +49,7 @@ function recurse_copy($src, $dst)
 if (isset($_SERVER['REQUEST_URI'])) {
     if (strpos($_SERVER['REQUEST_URI'], '/login') !== FALSE) {
         if (DB::get_option('force_sso') == TRUE) {
-            echo '<strong style="margin:34%;">Forced Single Sign On Configured. You will redirected to '.DB::get_option('saml_identity_name').' IdP</strong>';
+            echo '<strong style="margin:34%;">Forced Single Sign On Configured. You will redirected to ' . DB::get_option('saml_identity_name') . ' IdP</strong>';
             header('refresh:5;url=login.php');
         }
         // for generating a login button on login page
@@ -176,6 +166,8 @@ if (isset($_POST['option']) and $_POST['option'] == "mo_saml_verify_customer") {
         DB::delete_option('mo_saml_verify_customer');
         mo_saml_show_success_message();
     } else {
+        DB::delete_option('mo_saml_admin_email', $email);
+        DB::delete_option('mo_saml_admin_password', $password);
         DB::update_option('mo_saml_message', 'Invalid username or password. Please try again.');
         mo_saml_show_error_message();
     }
@@ -320,7 +312,7 @@ if (isset($_POST['option']) && $_POST['option'] == 'save_connector_settings') {
 
         DB::update_option('mo_saml_message', 'Settings saved successfully.');
         mo_saml_show_success_message();
-        //var_dump($saml_x509_certificate);exit;
+        // var_dump($saml_x509_certificate);exit;
         if (empty($saml_x509_certificate)) {
             DB::update_option("mo_saml_message", 'Invalid Certificate:Please provide a certificate');
             mo_saml_show_error_message();
@@ -488,9 +480,9 @@ function mo_saml_is_customer_registered()
     $email = DB::get_option('mo_saml_admin_email');
     $customerKey = DB::get_option('mo_saml_admin_customer_key');
     if (! $email || ! $customerKey || ! is_numeric(trim($customerKey))) {
-        return 0;
+        return false;
     } else {
-        return 1;
+        return true;
     }
 }
 
@@ -596,12 +588,9 @@ function mo_saml_show_customer_details()
 				<form name="f1" method="post" action="" id="mo_saml_goto_login_form"
 					style="margin-block-end: auto;">
 					<input type="hidden" value="change_miniorange" name="option" /> <input
-						type="submit" value="Change Email Address" class="btn btn-primary" />
+						type="submit" value="Change miniOrange Account" class="btn btn-primary" />
 				</form>
 			</td>
-			<td><a href="#"><input type="button" class="btn btn-primary"
-					onclick="upgradeform('php_connector_premium_plan')"
-					value="Upgrade to Premium" /></a></td>
 		</tr>
 	</table>
 
@@ -616,14 +605,6 @@ function mo_saml_show_customer_details()
 			value="<?php echo DB::get_option( 'mo_saml_host_name' ) . '/moas/initializepayment'; ?>" />
 		<input type="text" name="requestOrigin" id="requestOrigin" />
 	</form>
-	<script>
-                function upgradeform(planType) {
-                    jQuery('#requestOrigin').val(planType);
-                    if(jQuery('#mo_customer_registered').val()==1)
-                        jQuery('#loginform').submit();
-
-                }
-            </script>
 </div>
 <?php
 }

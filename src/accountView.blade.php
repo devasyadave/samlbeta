@@ -86,15 +86,10 @@
                     if (mo_saml_is_customer_license_verified()) {
                         mo_saml_show_customer_details();
                     } else {
-                        
                         mo_saml_show_verify_license_page();
                     }
                 } else {
-                    if (DB::get_option('mo_saml_verify_customer') == 'true') {
-                        mo_saml_show_verify_password_page();
-                    } else {
-                        mo_saml_show_verify_password_page();
-                    }
+                    mo_saml_show_verify_password_page();
                 }
                 ?>
                 </div>
