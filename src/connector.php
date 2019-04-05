@@ -701,7 +701,6 @@ function mo_saml_show_verify_license_page()
 
 function mo_saml_remove_account()
 {
-    DB::delete_option('mo_saml_host_name');
     DB::delete_option('mo_saml_new_registration');
     DB::delete_option('mo_saml_admin_phone');
     DB::delete_option('mo_saml_admin_password');
