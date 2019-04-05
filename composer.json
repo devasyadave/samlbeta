@@ -42,5 +42,6 @@
 				"provider\\ssoEventServiceProvider"
 			]
 		}
-	}
+	},
+	"minimum-stability" : "stable"
 }
