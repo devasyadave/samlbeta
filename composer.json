@@ -13,6 +13,7 @@
 			"email" : "devasyadave@gmail.com"
 		}
 	],
+	"version" : "1.0.0",
 	"config" : {
 		"optimize-autoloader" : true,
 		"sort-packages" : true
