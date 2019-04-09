@@ -1,12 +1,6 @@
 {
 	"name" : "devasyadave/samlbeta",
 	"description" : "Provides functionality to plugin",
-	"keywords" : [
-		"environment",
-		"hhvm",
-		"xdebug"
-	],
-	"homepage" : "https://www.google.com",
 	"license" : "BSD-3-Clause",
 	"authors" : [{
 			"name" : "devasyadave",
@@ -14,10 +8,6 @@
 		}
 	],
 	"version" : "1.0.0",
-	"config" : {
-		"optimize-autoloader" : true,
-		"sort-packages" : true
-	},
 	"require" : {
 		"php" : "^5.1 || ^7.1"
 	},
