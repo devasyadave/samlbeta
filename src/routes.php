@@ -2,7 +2,7 @@
 use MiniOrange\Classes\Actions\AuthFacadeController;
 
 Route::get('mo_admin', function () {
-    include_once 'index.php';
+    include_once 'launcher.php';
 });
 
 Route::get('register.php', function () {
